@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import numpy as np
 import json
+from pathlib import Path
 
 app = FastAPI()
 
@@ -14,8 +15,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Resolve file path relative to app.py
+root = Path(__file__).parent
+json_file = root / "q-vercel-latency.json"
+
 # Load telemetry JSON once at startup
-with open("q-vercel-latency.json") as f:
+with open(json_file) as f:
     telemetry = pd.DataFrame(json.load(f))
 
 @app.post("/")
