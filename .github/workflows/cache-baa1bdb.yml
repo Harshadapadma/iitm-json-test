@@ -1,0 +1,24 @@
+name: Cache Demo BAA1BDB
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  cache-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: prime-cache-baa1bdb
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/demo
+          key: cache-baa1bdb
+
+      - name: Show cache result
+        run: echo "Cache result:${{ steps.cache-step.outputs.cache-hit }}"
