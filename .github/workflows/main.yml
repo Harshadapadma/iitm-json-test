@@ -1,24 +1,24 @@
-name: Cache Dependencies
+name: Cache Demo
 
 on:
-  push:
+  workflow_dispatch:   
+  push:               
     branches:
       - main
-  pull_request:
 
 jobs:
-  build:
+  cache-job:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Prime cache - cache-baa1bdb
-        id: prime-cache-baa1bdb
+      - name: prime-cache-877a5a9 
+        id: cache-step
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pip
-          key: cache-baa1bdb
-      - name: Show cache status
-        run: echo "Cache hit? ${{ steps.prime-cache-baa1bdb.outputs.cache-hit }}"
+          path: ~/.cache/demo
+          key: cache-877a5a9
+
+      - name: Show cache result
+        run: echo "Cache result:${{ steps.cache-step.outputs.cache-hit }}"
